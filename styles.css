@@ -1,0 +1,261 @@
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Satoshi", sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f5f5f5;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+header {
+  text-align: center;
+  padding: 1rem;
+  background-color: #f5f5f5;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #ddd;
+}
+
+.intro {
+  margin: 20px auto 10px auto;
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1rem;
+  min-height: 0;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: min(80vh, 80vw);
+  aspect-ratio: 1;
+}
+
+.art-piece {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+}
+
+.art-content {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
+
+/* Assign different colors to each art piece */
+.art-piece:nth-child(1) .art-content {
+  background-color: #ff6b6b;
+}
+.art-piece:nth-child(2) .art-content {
+  background-color: #4ecdc4;
+}
+.art-piece:nth-child(3) .art-content {
+  background-color: #45b7d1;
+}
+.art-piece:nth-child(4) .art-content {
+  background-color: #96ceb4;
+}
+
+.tooltip {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Position tooltips for left column */
+.art-piece:nth-child(odd) .tooltip {
+  right: calc(100% + 1rem);
+  left: auto;
+}
+
+/* Position tooltips for right column */
+.art-piece:nth-child(even) .tooltip {
+  left: calc(100% + 1rem);
+  right: auto;
+}
+
+/* Interaction States */
+.art-piece:hover,
+.art-piece:focus {
+  transform: scale(1.05);
+  outline: none;
+}
+
+.art-piece:hover .art-content,
+.art-piece:focus .art-content {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.2);
+}
+
+.art-piece:hover .tooltip,
+.art-piece:focus .tooltip {
+  opacity: 1;
+}
+
+/* Special interaction states for first two blocks */
+.art-piece:nth-child(1):hover .art-content,
+.art-piece:nth-child(1):focus .art-content {
+  box-shadow: none;
+  filter: none;
+}
+
+.art-piece:nth-child(2):hover .art-content,
+.art-piece:nth-child(2):focus .art-content {
+  box-shadow: none;
+  filter: none;
+}
+
+/* Reveal effect for blocks 3 and 4 */
+.art-piece:nth-child(3) .art-content,
+.art-piece:nth-child(4) .art-content {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Block 3 specific styles */
+.art-piece:nth-child(3) .art-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  transition: transform 0.5s ease;
+  transform: translateX(0);
+}
+
+.art-piece:nth-child(3).active .art-content::before {
+  transform: translateX(100%);
+}
+
+/* Block 4 specific styles */
+.art-piece:nth-child(4) .art-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  transition: transform 0.5s ease;
+  transform: translateY(0);
+}
+
+.art-piece:nth-child(4).active .art-content::before {
+  transform: translateY(100%);
+}
+
+/* Hide tooltip when block is active */
+.art-piece.active .tooltip {
+  opacity: 0;
+}
+
+/* Reset transform when block is active */
+.art-piece.active {
+  transform: none;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+  background-color: #f0f0f0;
+  outline: none;
+}
+
+/* Focus Styles */
+.art-piece:focus-visible {
+  outline: 3px solid #4a90e2;
+  outline-offset: 4px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .art-piece,
+  .art-content,
+  .tooltip {
+    transition: none;
+  }
+}
