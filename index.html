@@ -4,52 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alt Text Adventures - Hidden in Plain Sight</title>
+    <title>Interactive Nature Scene</title>
+    <script src="https://unpkg.com/css-doodle@0.34.8/css-doodle.min.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <header>
-        <p class="intro">Navigate the blocks using Left-Click, Tab+Press 'o', Double-Click, or Tab+Space to reveal
-            hidden
-            stories and artwork.</p>
-    </header>
-
-    <main>
-        <div class="gallery" role="region" aria-label="Interactive Art Gallery">
-            <article class="art-piece" tabindex="0" aria-label="A serene mountain lake at sunset"
-                data-story="As the last rays of sunlight kiss the mountain peaks, the lake mirrors the sky's transformation from gold to purple. A lone eagle circles overhead, its reflection rippling across the water's surface.">
-                <div class="art-content"></div>
-                <div class="tooltip">What happens if you left-click this block?</div>
-            </article>
-
-            <article class="art-piece" tabindex="0" aria-label="An ancient library filled with mysterious books"
-                data-story="Dusty tomes line endless shelves, their spines adorned with forgotten languages. The air is thick with the scent of aged paper and untold stories waiting to be discovered.">
-                <div class="art-content"></div>
-                <div class="tooltip">What happens if you tab to this block?</div>
-            </article>
-
-            <article class="art-piece" tabindex="0" aria-label="A bustling night market in Tokyo"
-                data-story="Neon signs paint the rain-slicked streets in electric colors. The air buzzes with conversation and the sizzle of street food, while paper lanterns sway gently in the evening breeze.">
-                <div class="art-content"></div>
-                <div class="tooltip">What happens if you tab to this block too?</div>
-            </article>
-
-            <article class="art-piece" tabindex="0" aria-label="A secret garden at midnight"
-                data-story="Moonflowers bloom under starlight, their petals glowing like captured moonbeams. The garden whispers ancient secrets to those who listen closely enough.">
-                <div class="art-content"></div>
-                <div class="tooltip">What happens if you double-click this block?</div>
-            </article>
-        </div>
-    </main>
-
-    <div id="story-modal" class="modal" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <button class="close-button" aria-label="Close story">&times;</button>
-            <p id="story-text"></p>
-        </div>
+    <div id="forest"></div>
+    <div id="grass">
+        <div id="bug">🐞</div>
     </div>
-
+    <css-doodle id="dood"></css-doodle>
     <script src="script.js"></script>
 </body>
 

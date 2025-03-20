@@ -175,3 +175,189 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+function getCss(gridSize, is3d) {
+  var doodl = `:doodle {
+        @grid:${gridSize}/ 100%;
+        width:100vw;
+        height:100vh;
+    }
+    :container {
+        transform-style:${is3d ? "preserve-3d" : "flat"};
+    }
+    :after {
+        content:@p(🦋);
+    } 
+    @random(.15) {
+        filter:hue-rotate(@r(-180deg, 180deg));
+    }
+    
+    animation: fly @r(10s, 20s) infinite linear;
+    will-change:transform;
+    position:absolute;
+    left:@r(100%);
+    bottom:@r(75px, 250px);
+    
+    @keyframes fly {
+        0% {
+            transform:
+            translateX(@r(-20px, 20px))
+            translateY(@r(-20px, 20px));
+        }
+        33% {
+            transform:
+            translateX(calc(@p(-1,1)*@r(20)*@p(1vmax)))
+            translateY(calc(-1*@r(40)*1vmax))
+            rotateY(@r(15turn, 25turn))
+            rotateZ(@r(-.05turn, .05turn));
+        }
+        66% {
+            transform:
+            translateX(calc(@p(-1,1)*@r(20)*@p(1vmax)))
+            translateY(calc(-1*@r(30,60)*1vmax))
+            rotateY(@r(35turn, 45turn))
+            rotateZ(@r(-.05turn, .05turn));
+        }
+        100% {
+            transform:
+            translateX(calc(@p(-1,1,1)*@r(40)*1vmax))
+            translateY(calc(-100*1vmax))
+            rotateY(@r(55turn, 70turn))
+            rotateZ(@r(-.05turn, .05turn));
+        }
+    }
+`;
+  return doodl;
+}
+
+// Initialize variables
+var body = document.querySelector("body");
+var dood = document.getElementById("dood");
+var forest = document.querySelector("div#forest");
+
+// Event listeners
+body.onload = () => {
+  init();
+  // Start the periodic updates
+  startForestUpdates();
+};
+window.addEventListener("resize", init, false);
+
+let forestUpdateInterval;
+
+function startForestUpdates() {
+  // Initial update of the doodle
+  dood.update(getCss(15, false));
+
+  // Update forest and doodle every 4 seconds
+  forestUpdateInterval = setInterval(() => {
+    updateForest();
+    dood.update(getCss(15, false));
+  }, 4000);
+
+  // Click to trigger immediate update
+  document.addEventListener("click", () => {
+    clearInterval(forestUpdateInterval);
+    updateForest();
+    dood.update(getCss(15, false));
+    startForestUpdates();
+  });
+}
+
+// Helper functions
+function init() {
+  dood.update(getCss(15, false));
+  updateForest();
+}
+
+function updateForest() {
+  let wid = Math.max(
+    document.documentElement.clientWidth,
+    window.innerWidth || 0
+  );
+  let density = Math.floor(wid / 10);
+
+  // If forest is empty, create initial trees
+  if (forest.children.length === 0) {
+    createInitialForest(density);
+  } else {
+    // Update existing trees with new positions and heights
+    updateExistingTrees(density);
+  }
+}
+
+function createInitialForest(density) {
+  forest.innerHTML = "";
+  let min = -20;
+  let max = 120;
+
+  for (let i = 0; i < density; i++) {
+    let pos = Math.random() * (max - min + 1) + min;
+    let hei = getRandomIntInclusive(5, 250);
+    forest.appendChild(generateTree(hei, pos));
+  }
+}
+
+function updateExistingTrees(targetDensity) {
+  let min = -20;
+  let max = 120;
+  let currentTrees = Array.from(forest.children);
+
+  // Update existing trees with new positions and heights
+  currentTrees.forEach((tree) => {
+    let newPos = Math.random() * (max - min + 1) + min;
+    let newHeight = getRandomIntInclusive(5, 250);
+
+    // Apply smooth transitions
+    tree.style.transition = "all 0.7s ease";
+    tree.style.left = `${newPos}%`;
+    tree.querySelector(".tree__4").style.height = `${newHeight}px`;
+
+    // Randomly adjust tree parts sizes
+    let parts = tree.querySelectorAll('[class^="tree__"]');
+    parts.forEach((part) => {
+      if (part.className !== "tree__4") {
+        let scale = 0.8 + Math.random() * 0.4; // Random scale between 0.8 and 1.2
+        part.style.transform = `scale(${scale})`;
+        part.style.transition = "all 0.7s ease";
+      }
+    });
+  });
+
+  // Adjust forest density if needed
+  if (currentTrees.length < targetDensity) {
+    // Add new trees
+    for (let i = currentTrees.length; i < targetDensity; i++) {
+      let pos = Math.random() * (max - min + 1) + min;
+      let hei = getRandomIntInclusive(5, 250);
+      forest.appendChild(generateTree(hei, pos));
+    }
+  } else if (currentTrees.length > targetDensity) {
+    // Remove excess trees
+    for (let i = currentTrees.length - 1; i >= targetDensity; i--) {
+      forest.removeChild(currentTrees[i]);
+    }
+  }
+}
+
+function generateTree(height, position) {
+  let template = `
+        <div class="tree__5"></div>
+        <div class="tree__1"></div>
+        <div class="tree__2"></div>
+        <div class="tree__3"></div>
+        <div class="tree__4" style="height:${height}px"></div>
+    `;
+  let el = document.createElement("div");
+  el.setAttribute("class", "tree");
+  el.style.left = `${position}%`;
+  el.innerHTML = template;
+  el.style.zIndex = Math.random() > 0.5 ? -10 : 10;
+  return el;
+}
+
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
