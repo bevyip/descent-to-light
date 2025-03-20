@@ -238,31 +238,20 @@ var forest = document.querySelector("div#forest");
 // Event listeners
 body.onload = () => {
   init();
-  // Start the periodic updates
-  startForestUpdates();
 };
 window.addEventListener("resize", init, false);
 
-let forestUpdateInterval;
+// Track last scroll position to detect scroll direction
+let lastScrollY = window.scrollY;
 
-function startForestUpdates() {
-  // Initial update of the doodle
-  dood.update(getCss(15, false));
-
-  // Update forest and doodle every 4 seconds
-  forestUpdateInterval = setInterval(() => {
+// Add scroll event listener
+window.addEventListener("wheel", (e) => {
+  // Check if scrolling down (positive deltaY means scrolling down)
+  if (e.deltaY > 0) {
     updateForest();
     dood.update(getCss(15, false));
-  }, 4000);
-
-  // Click to trigger immediate update
-  document.addEventListener("click", () => {
-    clearInterval(forestUpdateInterval);
-    updateForest();
-    dood.update(getCss(15, false));
-    startForestUpdates();
-  });
-}
+  }
+});
 
 // Helper functions
 function init() {

@@ -350,7 +350,9 @@ main {
 #bug {
   transform-origin: 0% 100%;
   transform: rotate(100deg);
-  animation: walk 200s infinite ease-in-out;
+  animation: walk 100s infinite ease-in-out;
+  position: absolute;
+  bottom: 30px;
 }
 
 @keyframes walk {
