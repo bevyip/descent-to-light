@@ -345,18 +345,26 @@ main {
   bottom: 0;
   width: 100vw;
   height: 40px;
+  z-index: 1;
 }
 
-#bug {
+#bug-link {
+  text-decoration: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 30px;
   transform-origin: 0% 100%;
   transform: rotate(100deg);
   animation: walk 100s infinite ease-in-out;
-  position: absolute;
-  bottom: 30px;
+}
+
+#bug {
+  font-size: 1.2em;
+  cursor: pointer;
 }
 
 @keyframes walk {
   to {
-    transform: translateX(102vw) rotate(90deg);
+    transform: translateX(100vw) rotate(90deg);
   }
 }

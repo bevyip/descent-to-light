@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.cave-background {
+  width: 100vw;
+  height: 100vh;
+  background: url("img/cave.jpg") center/cover no-repeat;
+  position: relative;
+}
+
+.hotspot {
+  position: absolute;
+  background: transparent;
+  cursor: url("img/skull.png"), auto;
+  left: 50%;
+  top: 50%;
+  width: 200px;
+  height: 200px;
+}
+
+.fade-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 2s ease;
+  z-index: 1000;
+}
+
+.fade-out {
+  opacity: 1;
+  pointer-events: all;
+}

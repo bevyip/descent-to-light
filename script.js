@@ -1,9 +1,43 @@
+// Initialize variables
+let body, dood, forest;
+let lastFocusedArtPiece = null;
+
+// Wait for DOM to be fully loaded
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize element references for nature scene
+  body = document.querySelector("body");
+  dood = document.getElementById("dood");
+  forest = document.querySelector("div#forest");
+
+  // Initialize nature scene if elements exist
+  if (dood && forest) {
+    init();
+    // Add event listeners
+    window.addEventListener("resize", init, false);
+
+    // Add scroll event listener
+    window.addEventListener("wheel", (e) => {
+      // Check if scrolling down (positive deltaY means scrolling down)
+      if (e.deltaY > 0) {
+        updateForest();
+        dood.update(getCss(15, false));
+      }
+    });
+  }
+
+  // Initialize art pieces and modal if they exist
   const artPieces = document.querySelectorAll(".art-piece");
   const modal = document.getElementById("story-modal");
   const storyText = document.getElementById("story-text");
   const closeButton = document.querySelector(".close-button");
 
+  if (artPieces.length && modal && storyText && closeButton) {
+    initializeArtPieces(artPieces, modal, storyText, closeButton);
+  }
+});
+
+// Function to initialize art pieces and modal
+function initializeArtPieces(artPieces, modal, storyText, closeButton) {
   // Function to show modal
   function showModal(story) {
     storyText.textContent = story;
@@ -43,8 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
       lastFocusedArtPiece.focus();
     }
   }
-
-  let lastFocusedArtPiece = null;
 
   // Function to handle block deactivation
   function deactivateBlock(piece) {
@@ -174,89 +206,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
-});
-
-function getCss(gridSize, is3d) {
-  var doodl = `:doodle {
-        @grid:${gridSize}/ 100%;
-        width:100vw;
-        height:100vh;
-    }
-    :container {
-        transform-style:${is3d ? "preserve-3d" : "flat"};
-    }
-    :after {
-        content:@p(🦋);
-    } 
-    @random(.15) {
-        filter:hue-rotate(@r(-180deg, 180deg));
-    }
-    
-    animation: fly @r(10s, 20s) infinite linear;
-    will-change:transform;
-    position:absolute;
-    left:@r(100%);
-    bottom:@r(75px, 250px);
-    
-    @keyframes fly {
-        0% {
-            transform:
-            translateX(@r(-20px, 20px))
-            translateY(@r(-20px, 20px));
-        }
-        33% {
-            transform:
-            translateX(calc(@p(-1,1)*@r(20)*@p(1vmax)))
-            translateY(calc(-1*@r(40)*1vmax))
-            rotateY(@r(15turn, 25turn))
-            rotateZ(@r(-.05turn, .05turn));
-        }
-        66% {
-            transform:
-            translateX(calc(@p(-1,1)*@r(20)*@p(1vmax)))
-            translateY(calc(-1*@r(30,60)*1vmax))
-            rotateY(@r(35turn, 45turn))
-            rotateZ(@r(-.05turn, .05turn));
-        }
-        100% {
-            transform:
-            translateX(calc(@p(-1,1,1)*@r(40)*1vmax))
-            translateY(calc(-100*1vmax))
-            rotateY(@r(55turn, 70turn))
-            rotateZ(@r(-.05turn, .05turn));
-        }
-    }
-`;
-  return doodl;
 }
 
-// Initialize variables
-var body = document.querySelector("body");
-var dood = document.getElementById("dood");
-var forest = document.querySelector("div#forest");
-
-// Event listeners
-body.onload = () => {
-  init();
-};
-window.addEventListener("resize", init, false);
-
-// Track last scroll position to detect scroll direction
-let lastScrollY = window.scrollY;
-
-// Add scroll event listener
-window.addEventListener("wheel", (e) => {
-  // Check if scrolling down (positive deltaY means scrolling down)
-  if (e.deltaY > 0) {
-    updateForest();
-    dood.update(getCss(15, false));
-  }
-});
-
-// Helper functions
+// Helper functions for nature scene
 function init() {
-  dood.update(getCss(15, false));
-  updateForest();
+  if (dood) dood.update(getCss(15, false));
+  if (forest) updateForest();
 }
 
 function updateForest() {
@@ -349,4 +304,58 @@ function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getCss(gridSize, is3d) {
+  var doodl = `:doodle {
+        @grid:${gridSize}/ 100%;
+        width:100vw;
+        height:100vh;
+    }
+    :container {
+        transform-style:${is3d ? "preserve-3d" : "flat"};
+    }
+    :after {
+        content:@p(🦋);
+    } 
+    @random(.15) {
+        filter:hue-rotate(@r(-180deg, 180deg));
+    }
+    
+    animation: fly @r(10s, 20s) infinite linear;
+    will-change:transform;
+    position:absolute;
+    left:@r(100%);
+    bottom:@r(75px, 250px);
+    
+    @keyframes fly {
+        0% {
+            transform:
+            translateX(@r(-20px, 20px))
+            translateY(@r(-20px, 20px));
+        }
+        33% {
+            transform:
+            translateX(calc(@p(-1,1)*@r(20)*@p(1vmax)))
+            translateY(calc(-1*@r(40)*1vmax))
+            rotateY(@r(15turn, 25turn))
+            rotateZ(@r(-.05turn, .05turn));
+        }
+        66% {
+            transform:
+            translateX(calc(@p(-1,1)*@r(20)*@p(1vmax)))
+            translateY(calc(-1*@r(30,60)*1vmax))
+            rotateY(@r(35turn, 45turn))
+            rotateZ(@r(-.05turn, .05turn));
+        }
+        100% {
+            transform:
+            translateX(calc(@p(-1,1,1)*@r(40)*1vmax))
+            translateY(calc(-100*1vmax))
+            rotateY(@r(55turn, 70turn))
+            rotateZ(@r(-.05turn, .05turn));
+        }
+    }
+`;
+  return doodl;
 }

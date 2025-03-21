@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cave</title>
+    <link rel="stylesheet" href="cave.css">
+</head>
+
+<body>
+    <div class="cave-background">
+        <div class="hotspot"></div>
+    </div>
+    <div class="fade-overlay"></div>
+    <script>
+        document.querySelector('.hotspot').addEventListener('click', () => {
+            const overlay = document.querySelector('.fade-overlay');
+            overlay.classList.add('fade-out');
+
+            // Wait for fade to black to complete before redirecting
+            setTimeout(() => {
+                localStorage.setItem('transitioning', 'true');
+                window.location.href = 'white.html';
+            }, 2000);
+        });
+    </script>
+</body>
+
+</html>
