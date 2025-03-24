@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/skull.png">
+    <title>Remains</title>
+    <link rel="stylesheet" href="remains.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="fade-overlay"></div>
+    <div id="typing-container">
+        <div id="typed-text"></div>
+    </div>
+    <img id="skeleton" src="img/skeleton.png" >
+    <a id="link" href="https://preistoriainitalia.it/en/scheda/sepolture-della-grotta-del-romito-papasidero-cs/" >
+       <img src="img/hands.png">
+    </a>
+    <script>
+        // Start fade to white after a short delay
+        setTimeout(() => {
+            document.querySelector('.fade-overlay').classList.add('fade-in');
+        }, 100);
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+                [array[i], array[j]] = [array[j], array[i]];  // swap elements
+            }
+            return array;
+        }
+
+        const text = `Romito 2 is the 10,000-year-old burial of a male with a rare genetic disorder (acromesomelic dysplasia): a severe type of dwarfism, which in life would have rendered him both anomalous in his community and unable to participate in the kind of high-altitude hunting that was necessary for their survival.|Studies of his pathology show that, despite generally poor levels of health and nutrition, that same community of hunter-gatherers still took pains to support this individual through infancy and into early adulthood, granting him the same share of meat as everyone else, and ultimately according him a careful, sheltered burial.|Neither is Romito 2 an isolated case. When archaeologists undertake balanced appraisals of hunter-gatherer burials from the Palaeolithic, they find high frequencies of health-related disabilities – but also surprisingly high levels of care until the time of death (and beyond, since some of these funerals were remarkably lavish).`
+        // Random letter reveal effect
+        const container = document.getElementById('typed-text');
+
+        const sentences = text.split('|');
+        let sWords = [];
+
+        for (const s of sentences) {
+            // Split text into spans
+            sWords.push(s.split(' ').map(word => {
+                const span = document.createElement('span');
+                span.classList.add('char');
+                span.textContent = word + ' ';
+                container.appendChild(span);
+                return span;
+            }));
+            container.append(document.createElement('br'));
+            container.append(document.createElement('br'));
+        }
+
+        words = [].concat(...sWords);
+        let interactionCount = 0;
+
+        document.addEventListener('keydown', () => {
+            const hiddenWords = shuffleArray(words.filter(c => !c.classList.contains('visible')));
+            if (interactionCount < 25) {
+                if (hiddenWords.length > 0) {
+                    const randomWord = hiddenWords[0];
+                    randomWord.style.transitionDelay = `${Math.random() * 0.5}s`;
+                    randomWord.classList.add('visible');
+                    interactionCount++;
+                }
+            } else {
+                for (const word of hiddenWords) {
+                    word.style.transitionDelay = `${Math.random() * 2}s`;
+                    word.classList.add('visible');
+                }
+
+                const link = document.getElementById('link')
+                link.style.transitionDelay = `2.2s`;
+                link.classList.add('visible');
+            }
+        });
+            
+        </script>
+    </body>
+
+</html>
