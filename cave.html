@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/skull.png">
     <title>Cave</title>
     <link rel="stylesheet" href="cave.css">
 </head>
@@ -14,6 +15,7 @@
     </div>
     <div class="fade-overlay"></div>
     <script>
+        new Audio("sound/cave.mp3").play();
         document.querySelector('.hotspot').addEventListener('click', () => {
             const overlay = document.querySelector('.fade-overlay');
             overlay.classList.add('fade-out');

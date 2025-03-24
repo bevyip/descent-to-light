@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let lastY = 0;
   let totalPixels = 0;
   let erasedPixels = 0;
+  let bgSound = new Audio("sound/excavator.mp3");
 
   // Set canvas size and draw initial image
   function setCanvasSize() {
@@ -47,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const rect = canvas.getBoundingClientRect();
     lastX = e.clientX - rect.left;
     lastY = e.clientY - rect.top;
+    bgSound.play();
   }
 
   function draw(e) {
@@ -81,6 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function stopDrawing() {
     isDrawing = false;
+    bgSound.pause();
   }
 
   // Initial setup

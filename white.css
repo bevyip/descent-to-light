@@ -5,6 +5,8 @@ body {
   height: 100vh;
   background-color: white;
   overflow: hidden;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: xx-large;
 }
 
 .fade-overlay {
@@ -16,9 +18,56 @@ body {
   background-color: black;
   opacity: 1;
   transition: opacity 2s ease;
-  z-index: 1000;
+  z-index: 10;
 }
 
 .fade-in {
   opacity: 0;
+}
+
+#skeleton {
+  width: 100%;
+  height: auto;
+  bottom: 0;
+  position: absolute;
+}
+
+#typing-container {
+  position: fixed;
+  display: flex;
+  align-items: flex-start;
+  width: 100vw;
+  height: 85vh;
+  top: 0;
+  box-sizing: border-box;
+  /* padding: 2rem; */
+  /* max-height: 100vh; */
+  overflow-y: auto;
+}
+
+#typed-text {
+  color: #333;
+  font-family: monospace;
+  font-size: 24px;
+  white-space: pre-wrap;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  line-height: 1.5;
+}
+
+#cursor {
+  width: 2px;
+  height: 24px;
+  background-color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: blink 1s infinite;
+  transition: transform 0.1s ease;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }

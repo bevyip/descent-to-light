@@ -1,6 +1,7 @@
 // Initialize variables
 let body, dood, forest;
 let lastFocusedArtPiece = null;
+let bgSound = new Audio("sound/nature.mp3");
 
 // Wait for DOM to be fully loaded
 document.addEventListener("DOMContentLoaded", () => {
@@ -23,7 +24,15 @@ document.addEventListener("DOMContentLoaded", () => {
         dood.update(getCss(15, false));
       }
     });
+
+    window.addEventListener("mousemove", (e) => {
+      if(bgSound.paused) {
+        bgSound.play();
+      }
+    });
   }
+
+  // bgSound.play();
 
   // Initialize art pieces and modal if they exist
   const artPieces = document.querySelectorAll(".art-piece");
@@ -359,3 +368,12 @@ function getCss(gridSize, is3d) {
 `;
   return doodl;
 }
+
+document.addEventListener('keydown', (event) => {
+    if (currentPosition < targetText.length) {
+        event.preventDefault();
+        typedText += targetText[currentPosition];
+        typedTextElement.textContent = typedText;
+        currentPosition++;
+    }
+});

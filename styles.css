@@ -368,3 +368,42 @@ main {
     transform: translateX(100vw) rotate(90deg);
   }
 }
+
+#typing-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  max-width: 800px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#typed-text {
+  color: #333;
+  font-family: monospace;
+  font-size: 18px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-right: 4px;
+}
+
+#cursor {
+  width: 2px;
+  height: 18px;
+  background-color: #333;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+  align-self: center;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
