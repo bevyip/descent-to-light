@@ -9,17 +9,19 @@
     <link rel="stylesheet" href="remains.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <div class="fade-overlay"></div>
     <div id="typing-container">
         <div id="typed-text"></div>
+        <div id="cursor-hint">|</div>
     </div>
-    <img id="skeleton" src="img/skeleton.png" >
-    <a id="link" href="https://preistoriainitalia.it/en/scheda/sepolture-della-grotta-del-romito-papasidero-cs/" >
-       <img src="img/hands.png">
+    <img id="skeleton" src="img/skeleton.png">
+    <a id="link" href="https://preistoriainitalia.it/en/scheda/sepolture-della-grotta-del-romito-papasidero-cs/">
+        <img src="img/hands.png">
     </a>
     <script>
         // Start fade to white after a short delay
@@ -59,6 +61,9 @@
         let interactionCount = 0;
 
         document.addEventListener('keydown', () => {
+            // Hide the cursor hint on first keypress
+            document.getElementById('cursor-hint').classList.add('hidden');
+
             const hiddenWords = shuffleArray(words.filter(c => !c.classList.contains('visible')));
             if (interactionCount < 25) {
                 if (hiddenWords.length > 0) {
@@ -78,8 +83,8 @@
                 link.classList.add('visible');
             }
         });
-            
-        </script>
-    </body>
+
+    </script>
+</body>
 
 </html>

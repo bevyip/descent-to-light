@@ -5,7 +5,7 @@ body {
   height: 100vh;
   background-color: white;
   overflow: hidden;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: xx-large;
 }
 
@@ -30,7 +30,7 @@ body {
   height: auto;
   bottom: 0;
   position: absolute;
-  filter: sepia(.5) brightness(0.7);
+  filter: sepia(0.5) brightness(0.7);
 }
 
 span {
@@ -52,7 +52,7 @@ span {
 }
 
 #typed-text {
-  color: #3B2F2F;
+  color: #3b2f2f;
   font-family: "Courier Prime", monospace;
   font-weight: 450;
   font-style: normal;
@@ -68,7 +68,8 @@ span {
   opacity: 0;
   transform: translateY(10px);
   filter: blur(2px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out, filter 0.6s ease-out;
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out,
+    filter 0.6s ease-out;
   display: inline-block;
 }
 
@@ -93,6 +94,27 @@ a.visible {
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+#cursor-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2em;
+  font-family: "Courier Prime", monospace;
+  color: #000;
+  animation: blink 1s step-end infinite;
+  opacity: 0.7;
+}
+
+#cursor-hint.hidden {
+  display: none;
 }
